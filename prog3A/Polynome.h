@@ -6,6 +6,7 @@ class Polynome{
         vector<double> coefs;
         Polynome(vector<double> coefs);
 
+        vector <double> getPolynome();
         int getDeg();
 
         vector<double> resolvUsueal();

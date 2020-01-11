@@ -94,3 +94,8 @@ vector<double> Polynome::usual4()
     }
     return v1;
 }
+
+vector<double> Polynome::getPolynome()
+{
+    return this->coefs;
+}
