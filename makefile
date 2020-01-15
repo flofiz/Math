@@ -1,32 +1,31 @@
 LIB_PATHS= -L/usr/X11R6/lib -L/usr/lib
 HDR_PATHS= -I/usr/X11R6/include
-LIBS= -lm -L/usr/X11/lib  #-lXmu -lXi -lX11 -g-std=c++98
+LIBS=-lglut -lGLU -lGL -lm -L/usr/X11/lib -lXext -lstdc++ #-lXmu -lXi -lX11 -g-std=c++98
 
 CFLAGS=$(HDR_PATHS) -Wno-deprecated
-
-CC=g++
+CC=gcc
 #CC=gcc
 
-ok : projetMathbernstein 
+ok : OpenGL
 
 .cc.o:
 	$(CC) -c -O3 $(CFLAGS) $<
 
-OBJECTS_main = projetMathbernstein.o Polynome.o Fonctions.o
+OBJECTS_main = OpenGL.o Point.o Polynome.o Methode.o
 
-projetMathbernstein:  $(OBJECTS_main)
-	$(CC) $(OBJECTS_main) -o projetMathbernstein $(LIB_PATHS) $(LIBS)
 
-	
+OpenGL:  $(OBJECTS_main)
+	$(CC) $(OBJECTS_main) -o OpenGL $(LIB_PATHS) $(LIBS)
+
+
 indenter :
 	for i in *.h *.cpp do sed -i~ -f sed.sed  $i done
 	indent  *.h *.cpp
 
 clean :
 	rm -fr *.o
-#	touch *.cpp *.h
+	touch *.cc #*.h
 
 delete :
 	rm -f *.h~
 	rm -f *.cc~
-	rm -f *.txt

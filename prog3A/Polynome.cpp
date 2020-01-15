@@ -197,9 +197,17 @@ vector<double> Polynome::resolvUsual()
 vector <double> Polynome::resolvCastel(int precision)
 {
     vector<double> res;
+    vector<Point> ctrl1=toBernstein(this->coefs);
     vector<Point> resPts = casteljeau(toBernstein(this->coefs),precision);
     vector<double> pPInf,pM01,pMInf;
-
+    if(ctrl1[0].y==0)
+    {
+        res.push_back(ctrl1[0].x);
+    }
+    if(ctrl1[ctrl1.size()-1].y==0)
+    {
+        res.push_back(ctrl1[ctrl1.size()-1].x);
+    }
     for(int i = 0; i<coefs.size();i++)
     {
         pPInf.push_back(coefs[coefs.size()-i-1]);
@@ -210,7 +218,12 @@ vector <double> Polynome::resolvCastel(int precision)
     {
         pM01.push_back(pow(-1,i)*coefs[i]);
     }
+    ctrl1=toBernstein(pM01);
     vector<Point> resPtsM01 = casteljeau(toBernstein(pM01),precision);
+    if (ctrl1[ctrl1.size()-1].y==0)
+    {
+        res.push_back(-ctrl1[ctrl1.size()-1].x);
+    }
     
     for(int i = 0; i<coefs.size();i++)
     {
